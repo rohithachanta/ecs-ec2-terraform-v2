@@ -1,0 +1,17 @@
+# aws_region = "ap-south-1"
+# cluster_name = "captain-prod-cluster"
+# launch_template_name = "captain-prod-launch-template"
+# ami_id = "ami-00bb6a80f01f03502"
+# instance_type = "t3a.medium"
+# security_group_id = "sg-0f7e8dedf5ad10251"
+# subnets = ["subnet-4014730c", "subnet-1700ae6c", "subnet-5cf0c634"]
+# vpc_id = "vpc-59e9e031"
+# container_name = "captain-prod-container"
+# container_port = 8010
+# ecr_repo_name = "captain-prod-repo"
+# task_memory = "512"
+# task_cpu = "256"
+# asg_min_size = 2
+# asg_max_size = 10
+# asg_desired_capacity = 4
+# ecs_desired_count = 2

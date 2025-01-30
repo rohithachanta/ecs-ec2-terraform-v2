@@ -1,0 +1,29 @@
+[
+  {
+    "name": "django-sample-app-container",
+    "image": "412676116910.dkr.ecr.ap-south-1.amazonaws.com/django-sample-app-repo:latest",
+    "cpu": 256,
+    "memory": 512,
+    "portMappings": [
+      {
+        "containerPort": 8010,
+        "hostPort": 0,
+        "protocol": "tcp"
+      }
+    ],
+    "essential": true,
+    "environment": [],
+    "environmentFiles": [],
+    "mountPoints": [],
+    "volumesFrom": [],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-create-group": "true",
+        "awslogs-group": "/ecs/django-sample-app",
+        "awslogs-region": "ap-south-1",
+        "awslogs-stream-prefix": "ecs"
+      }
+    }
+  }
+]
