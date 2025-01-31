@@ -24,6 +24,16 @@
         "awslogs-region": "ap-south-1",
         "awslogs-stream-prefix": "ecs"
       }
-    }
+    },
+    "secrets": [
+      {
+        "name": "SENDHUB_LOGGER_IP",
+        "valueFrom": "arn:aws:secretsmanager:ap-south-1:412676116910:secret:ecs-secrets"
+      },
+      {
+        "name": "OTHER_ENV_VAR",
+        "valueFrom": "arn:aws:secretsmanager:ap-south-1:412676116910:secret:ecs-secrets"
+      }
+    ]
   }
 ]

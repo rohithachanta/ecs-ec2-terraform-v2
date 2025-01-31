@@ -176,6 +176,27 @@ resource "aws_iam_role" "codebuild_role" {
   })
 }
 
+#sectes_changed
+# resource "aws_iam_policy" "codebuild_policy" {
+#   name = "codebuild-policy"
+#   policy = jsonencode({
+#     Version = "2012-10-17",
+#     Statement = [
+#       {
+#         Effect = "Allow",
+#         Action = [
+#           "ecr:*",
+#           "logs:*",
+#           "s3:*",
+#           "ecs:*",
+#           "codebuild:*"
+#         ],
+#         Resource = "*"
+#       }
+#     ]
+#   })
+# }
+
 resource "aws_iam_policy" "codebuild_policy" {
   name = "codebuild-policy"
   policy = jsonencode({
@@ -184,11 +205,55 @@ resource "aws_iam_policy" "codebuild_policy" {
       {
         Effect = "Allow",
         Action = [
-          "ecr:*",
-          "logs:*",
-          "s3:*",
-          "ecs:*",
+          "ecr:GetAuthorizationToken",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:GetRepositoryPolicy",
+          "ecr:DescribeRepositories",
+          "ecr:ListImages",
+          "ecr:DescribeImageScanFindings",
+          "ecr:BatchGetImage",
+          "ecr:InitiateLayerUpload",
+          "ecr:UploadLayerPart",
+          "ecr:CompleteLayerUpload",
+          "ecr:PutImage"
+        ],
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "s3:*"
+        ],
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "ecs:*"
+        ],
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
           "codebuild:*"
+        ],
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "secretsmanager:GetSecretValue"
         ],
         Resource = "*"
       }

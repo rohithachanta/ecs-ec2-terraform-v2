@@ -126,7 +126,30 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_policy" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
+###########secret
+resource "aws_iam_policy" "secrets_manager_policy" {
+  name        = "secrets-manager-policy"
+  description = "Policy to allow access to Secrets Manager"
 
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "secrets_manager_policy_attachment" {
+  role       = aws_iam_role.ecs_task_execution_role.name
+  policy_arn = aws_iam_policy.secrets_manager_policy.arn
+}
+##########
 resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   alarm_name          = "HighCPUUtilization"
   comparison_operator = "GreaterThanThreshold"
@@ -215,4 +238,16 @@ resource "aws_appautoscaling_policy" "scale_in" {
       scaling_adjustment          = -1
     }
   }
+}
+
+resource "aws_secretsmanager_secret" "ecs_secrets" {
+  name = "ecs-secrets"
+}
+
+resource "aws_secretsmanager_secret_version" "ecs_secrets_version" {
+  secret_id     = aws_secretsmanager_secret.ecs_secrets.id
+  secret_string = jsonencode({
+    "SENDHUB_LOGGER_IP" = "your_sendhub_logger_ip",
+    "OTHER_ENV_VAR"     = "other_value"
+  })
 }
